@@ -45,6 +45,12 @@
         <dependency>
             <groupId>com.github.abel533</groupId>
             <artifactId>mapper</artifactId>
+            <exclusions>
+                <exclusion>
+                    <artifactId>persistence-api</artifactId>
+                    <groupId>javax.persistence</groupId>
+                </exclusion>
+            </exclusions>
         </dependency>
         <dependency>
             <groupId>org.projectlombok</groupId>
@@ -55,6 +61,12 @@
             <groupId>tk.mybatis</groupId>
             <artifactId>mapper</artifactId>
             <version>3.3.9</version>
+            <exclusions>
+                <exclusion>
+                    <artifactId>persistence-api</artifactId>
+                    <groupId>javax.persistence</groupId>
+                </exclusion>
+            </exclusions>
         </dependency>
     </dependencies>
 
