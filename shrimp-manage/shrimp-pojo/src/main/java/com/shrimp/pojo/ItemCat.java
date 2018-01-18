@@ -70,6 +70,8 @@ public class ItemCat extends BasePojo {
         this.isParent = isParent;
     }
 
+
+    //为了兼容EasyUI的处理模式，新增text，和status 的获取
     public String getText() {
         return getName();
     }
