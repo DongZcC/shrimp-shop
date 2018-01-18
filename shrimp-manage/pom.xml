@@ -42,11 +42,6 @@
             <artifactId>commons-io</artifactId>
         </dependency>
 
-
-        <dependency>
-            <groupId>com.github.jsqlparser</groupId>
-            <artifactId>jsqlparser</artifactId>
-        </dependency>
         <dependency>
             <groupId>com.github.abel533</groupId>
             <artifactId>mapper</artifactId>
