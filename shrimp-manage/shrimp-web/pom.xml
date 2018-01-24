@@ -9,17 +9,14 @@
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>web</artifactId>
+    <artifactId>manage-web</artifactId>
     <packaging>war</packaging>
-
     <dependencies>
         <dependency>
             <groupId>com.shrimp</groupId>
             <artifactId>service</artifactId>
             <version>1.0-SNAPSHOT</version>
         </dependency>
-
-
         <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-jdbc</artifactId>
@@ -77,6 +74,17 @@
             <groupId>joda-time</groupId>
             <artifactId>joda-time</artifactId>
         </dependency>
-
     </dependencies>
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.tomcat.maven</groupId>
+                <artifactId>tomcat7-maven-plugin</artifactId>
+                <configuration>
+                    <path>/</path>
+                    <port>8081</port>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
 </project>

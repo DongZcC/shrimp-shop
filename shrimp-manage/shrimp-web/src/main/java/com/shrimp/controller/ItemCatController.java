@@ -28,7 +28,9 @@ public class ItemCatController {
     @RequestMapping(method = RequestMethod.GET)
     public ResponseEntity<List<ItemCat>> queryItemCatList(@RequestParam(value = "id", defaultValue = "0") Long pid) {
         try {
-            List<ItemCat> cats = itemCatService.queryItemCatListByPid(pid);
+            ItemCat record = new ItemCat();
+            record.setParentId(pid);
+            List<ItemCat> cats = itemCatService.queryListByWhere(record);
             if (cats == null || cats.isEmpty()) {
                 return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
             }

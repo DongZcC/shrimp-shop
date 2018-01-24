@@ -14,15 +14,5 @@ import java.util.List;
  * Time: 21:38
  */
 @Service
-public class ItemCatService {
-
-    @Autowired
-    private ItemCatMapper itemCatMapper;
-
-
-    public List<ItemCat> queryItemCatListByPid(Long pid) {
-        ItemCat itemCat = new ItemCat();
-        itemCat.setParentId(pid);
-        return itemCatMapper.select(itemCat);
-    }
+public class ItemCatService extends BaseService<ItemCat> {
 }

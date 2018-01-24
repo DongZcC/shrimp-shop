@@ -14,7 +14,14 @@
 
     <!--打开spring自带的占位符功能-->
     <bean class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
-        <property name="locations" value="classpath*:*.properties"/>
+        <property name="ignoreResourceNotFound" value="true"/>
+        <property name="ignoreUnresolvablePlaceholders" value="true"/>
+        <property name="locations">
+            <list>
+                <value>classpath:jdbc.properties</value>
+                <value>classpath:env.properties</value>
+            </list>
+        </property>
     </bean>
 
 
