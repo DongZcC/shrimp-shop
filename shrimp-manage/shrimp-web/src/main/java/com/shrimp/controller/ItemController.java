@@ -4,6 +4,7 @@ import com.shrimp.common.bean.EasyUIResult;
 import com.shrimp.pojo.Item;
 import com.shrimp.pojo.ItemDesc;
 import com.shrimp.service.ItemService;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -18,6 +19,7 @@ import org.springframework.web.bind.annotation.RequestParam;
  * 开发人员: @author dongzc15247<br>
  * 开发时间: 2018-01-24<br>
  */
+@Slf4j
 @RequestMapping("item")
 @Controller
 public class ItemController {
@@ -41,7 +43,7 @@ public class ItemController {
 
 
     @RequestMapping(method = RequestMethod.GET)
-    public ResponseEntity<EasyUIResult> queryItemList(@RequestParam(value = "page", defaultValue = "0") Integer page, @RequestParam(value = "rows", defaultValue = "30") Integer rows) {
+    public ResponseEntity<EasyUIResult> queryItemList(@RequestParam(value = "page", defaultValue = "1") Integer page, @RequestParam(value = "rows", defaultValue = "30") Integer rows) {
         try {
             EasyUIResult easyUIResult = itemService.queryItemList(page, rows);
             return ResponseEntity.ok(easyUIResult);

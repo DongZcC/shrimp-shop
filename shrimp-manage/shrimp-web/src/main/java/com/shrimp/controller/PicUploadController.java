@@ -35,6 +35,9 @@ public class PicUploadController {
     /**
      * spring
      * 父子容器，子容器不能访问父容器中的值
+     * 1.子容器可以访问父容器的资源bean，父容器不可以访问子容器资源bean
+     * 2.spring配置读取配置文件属性例如jdbc.properties，父容器中可以使用@value("${key}") 对properties中的key获取其value值赋值给成员变量
+     * 3.value注解 是在所有bean创建成功之后才执行，且只能在当前容器的查找数据
      */
     @Autowired
     PropertiesService propertiesService;
