@@ -10,7 +10,7 @@
 	            <td>商品类目:</td>
 	            <td>
 	            	<a href="javascript:void(0)" class="easyui-linkbutton selectItemCat">选择类目</a>
-	            	<input type="hidden" name="cid" style="width: 280px;"></input>	
+	            	<input type="hidden" name="cid" style="width: 280px;"></input>
 	            </td>
 	        </tr>
 	        <tr>
@@ -53,7 +53,7 @@
 	        <tr class="params hide">
 	        	<td>商品规格:</td>
 	        	<td>
-	        		
+
 	        	</td>
 	        </tr>
 	    </table>
@@ -70,7 +70,7 @@
 		//实例化编辑器
 		itemEditEditor = TAOTAO.createEditor("#itemeEditForm [name=desc]");
 	});
-	
+
 	function submitForm(){
 		if(!$('#itemeEditForm').form('validate')){
 			$.messager.alert('提示','表单还未填写完成!');
@@ -78,7 +78,7 @@
 		}
 		$("#itemeEditForm [name=price]").val(eval($("#itemeEditForm [name=priceView]").val()) * 100);
 		itemEditEditor.sync();
-		
+
 		var paramJson = [];
 		$("#itemeEditForm .params li").each(function(i,e){
 			var trs = $(e).find("tr");
@@ -97,23 +97,37 @@
 			});
 		});
 		paramJson = JSON.stringify(paramJson);
-		
+
 		$("#itemeEditForm [name=itemParams]").val(paramJson);
-		
+
 		//提交到后台的RESTful
 		$.ajax({
 		   type: "PUT",
 		   url: "/rest/item",
 		   data: $("#itemeEditForm").serialize(),
-		   success: function(msg){
-			   $.messager.alert('提示','修改商品成功!','info',function(){
-					$("#itemEditWindow").window('close');
-					$("#itemList").datagrid("reload");
-				});
-		   },
-		   error: function(){
-			   $.messager.alert('提示','修改商品失败!');
-		   }
+//		   success: function(msg){
+//			   $.messager.alert('提示','修改商品成功!','info',function(){
+//					$("#itemEditWindow").window('close');
+//					$("#itemList").datagrid("reload");
+//				});
+//		   },
+//		   error: function(){
+//			   $.messager.alert('提示','修改商品失败!');
+//		   }
+            statusCode: {
+                204: function () {
+                    $.messager.alert('提示', '修改商品成功!', 'info', function () {
+                        $("#itemEditWindow").window('close');
+                        $("#itemList").datagrid("reload");
+                    });
+                },
+                400: function () {
+                    $.messager.alert('提示', '请求参数不合法!');
+                },
+                500: function () {
+                    $.messager.alert('提示', '修改商品失败!');
+                }
+            }
 		});
 	}
 </script>

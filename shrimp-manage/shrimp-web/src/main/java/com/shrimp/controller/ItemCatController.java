@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -35,6 +36,19 @@ public class ItemCatController {
                 return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
             }
             return ResponseEntity.ok(cats);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
+    }
+
+    @RequestMapping( value = "/info",method = RequestMethod.GET)
+    public ResponseEntity<ItemCat> queryItemCat(@RequestParam(value = "id")Long cid) {
+        try {
+            ItemCat cat = itemCatService.queryById(cid);
+            if (cat == null)
+                return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
+            return ResponseEntity.ok(cat);
         } catch (Exception e) {
             e.printStackTrace();
         }

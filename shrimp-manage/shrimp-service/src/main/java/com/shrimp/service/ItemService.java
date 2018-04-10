@@ -5,11 +5,11 @@ import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.shrimp.common.bean.EasyUIResult;
 import com.shrimp.pojo.Item;
-import com.shrimp.pojo.ItemCat;
 import com.shrimp.pojo.ItemDesc;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -40,7 +40,26 @@ public class ItemService extends BaseService<Item> {
         Example example = new Example(Item.class);
         example.setOrderByClause("updated DESC");
         List<Item> items = mapper.selectByExample(example);
-        PageInfo<Item> pageInfo = new PageInfo<Item>(items);
+        PageInfo<Item> pageInfo = new PageInfo<>(items);
         return new EasyUIResult(pageInfo.getTotal(), pageInfo.getList());
+    }
+
+    /**
+     * 更新商品数据，和desc
+     * @param item
+     * @param desc
+     * @return
+     */
+    public boolean updateItem(Item item, String desc) {
+        // 强制设置不允许更新的字段
+        item.setCreated(null);
+        item.setStatus(null);
+        item.setUpdated(new Date());
+        int f1 = updateSelective(item);
+        ItemDesc itemDesc = new ItemDesc();
+        itemDesc.setItemId(item.getId());
+        itemDesc.setItemDesc(desc);
+        int f2 = itemDescService.updateSelective(itemDesc);
+        return f1 == 1 && f2 == 1;
     }
 }
