@@ -100,7 +100,7 @@ var TT = TAOTAO = {
     	$(".selectItemCat").each(function(i,e){
     		var _ele = $(e);
     		if(data && data.cid){
-    			_ele.after("<span style='margin-left:10px;'>"+data.cid+"</span>");
+    			_ele.after("<span style='margin-left:10px;'>"+getItemCatById(data.cid)+"</span>");
     		}else{
     			_ele.after("<span style='margin-left:10px;'></span>");
     		}
@@ -243,3 +243,20 @@ var TT = TAOTAO = {
 		});
     }
 };
+
+
+var getItemCatById = function(cid) {
+	var name;
+	$.ajax("/rest/item/cat/info", {
+		dataType : "json",
+		data : {id : cid},
+		async : false,
+		success : function (data) {
+            name =  data.name;
+        },
+		error : function (data) {
+            name =  cid;
+        }
+	});
+	return name;
+}
