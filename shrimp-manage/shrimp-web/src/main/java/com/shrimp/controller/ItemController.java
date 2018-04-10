@@ -34,19 +34,21 @@ public class ItemController {
     private ItemDescService itemDescService;
 
     /**
-     *  新增
+     * 新增
+     *
      * @param item
      * @param desc
      * @return
      */
     @RequestMapping(method = RequestMethod.POST)
-    public ResponseEntity<Void> saveItem(Item item, @RequestParam(value = "desc") String desc) {
+    public ResponseEntity<Void> saveItem(Item item, @RequestParam(value = "desc") String desc, @RequestParam("itemParams") String itemParams) {
         item.setStatus(1);
         item.setId(null); // ID 由数据库自动生成
         //为了解决 事务问题，因此商品的增加 ，与商品描述的增加必须都要放到 同一个service方法中， 这样才能被事务管理到
         try {
-            itemService.saveItem(item, desc);
-            return ResponseEntity.status(HttpStatus.CREATED).build();
+            boolean suc = itemService.saveItem(item, desc, itemParams);
+            if (suc)
+                return ResponseEntity.status(HttpStatus.CREATED).build();
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -55,7 +57,8 @@ public class ItemController {
 
 
     /**
-     *  查询
+     * 查询
+     *
      * @param page
      * @param rows
      * @return
@@ -73,13 +76,13 @@ public class ItemController {
 
 
     @RequestMapping(method = RequestMethod.PUT)
-    public ResponseEntity<Void> updateItem(Item item,@RequestParam("desc") String desc) {
+    public ResponseEntity<Void> updateItem(Item item, @RequestParam("desc") String desc, @RequestParam("itemParams") String itemParams) {
         try {
             // 校验请求参数
             if (StringUtils.isEmpty(item.getTitle()))
                 return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
             // 保证事务一致性
-            boolean suc = itemService.updateItem(item, desc);
+            boolean suc = itemService.updateItem(item, desc, itemParams);
 
             if (suc)
                 return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
@@ -91,6 +94,7 @@ public class ItemController {
 
     /**
      * 查询商品描述
+     *
      * @param itemId 商品id
      * @return 商品描述
      */

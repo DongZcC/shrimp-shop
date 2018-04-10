@@ -92,6 +92,7 @@
         //输入的规格参数数据保存为json
         var paramJson = [];
         $("#itemAddForm .params li").each(function (i, e) {
+            // dom 对象封装jquery对象
             var trs = $(e).find("tr");
             var group = trs.eq(0).text();
             var ps = [];

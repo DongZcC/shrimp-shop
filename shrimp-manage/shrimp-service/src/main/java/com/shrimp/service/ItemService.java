@@ -6,6 +6,7 @@ import com.github.pagehelper.PageInfo;
 import com.shrimp.common.bean.EasyUIResult;
 import com.shrimp.pojo.Item;
 import com.shrimp.pojo.ItemDesc;
+import com.shrimp.pojo.ItemParamItem;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -24,13 +25,23 @@ public class ItemService extends BaseService<Item> {
     @Autowired
     ItemDescService itemDescService;
 
-    public void saveItem(Item item, String desc) {
+    @Autowired
+    ItemParamItemService itemParamItemService;
+
+    public boolean saveItem(Item item, String desc, String itemParams) {
         //保存item
-        save(item);
+        int f1 = save(item);
         ItemDesc itemDesc = new ItemDesc();
         itemDesc.setItemDesc(desc);
         itemDesc.setItemId(item.getId());
-        itemDescService.save(itemDesc);
+        int f2 = itemDescService.save(itemDesc);
+        // 保存商品规格参数数据
+        ItemParamItem itemParamItem = new ItemParamItem();
+        itemParamItem.setItemId(item.getId());
+        itemParamItem.setParamData(itemParams);
+        int f3 = itemParamItemService.save(itemParamItem);
+
+        return f1 == 1 && f2 == 1 && f3 == 1;
     }
 
     public EasyUIResult queryItemList(Integer page, Integer rows) {
@@ -50,7 +61,7 @@ public class ItemService extends BaseService<Item> {
      * @param desc
      * @return
      */
-    public boolean updateItem(Item item, String desc) {
+    public boolean updateItem(Item item, String desc, String itemParams) {
         // 强制设置不允许更新的字段
         item.setCreated(null);
         item.setStatus(null);
@@ -60,6 +71,8 @@ public class ItemService extends BaseService<Item> {
         itemDesc.setItemId(item.getId());
         itemDesc.setItemDesc(desc);
         int f2 = itemDescService.updateSelective(itemDesc);
-        return f1 == 1 && f2 == 1;
+
+        int f3 = itemParamItemService.updateItemParamItem(item.getId(), itemParams);
+        return f1 == 1 && f2 == 1 && f3 == 1;
     }
 }
