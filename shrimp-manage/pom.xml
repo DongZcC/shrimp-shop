@@ -13,10 +13,11 @@
     <artifactId>manage</artifactId>
     <packaging>pom</packaging>
     <modules>
-        <module>shrimp-pojo</module>
-        <module>shrimp-mapper</module>
-        <module>shrimp-service</module>
-        <module>shrimp-web</module>
+        <module>shrimp-manage-pojo</module>
+        <module>shrimp-manage-mapper</module>
+        <module>shrimp-manage-service</module>
+        <module>shrimp-manage-web</module>
+        <module>../shrimp-web</module>
     </modules>
 
 
