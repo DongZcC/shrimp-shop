@@ -4,7 +4,6 @@ import com.github.abel533.entity.Example;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.shrimp.common.bean.EasyUIResult;
-import com.shrimp.pojo.Item;
 import com.shrimp.pojo.ItemParam;
 import org.springframework.stereotype.Service;
 
