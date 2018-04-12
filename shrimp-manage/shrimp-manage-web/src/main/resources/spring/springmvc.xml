@@ -8,7 +8,17 @@
         http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.0.xsd">
 
     <!--开启注解驱动-->
-    <mvc:annotation-driven/>
+    <mvc:annotation-driven>
+        <!--注册自定义的消息转换器-->
+        <mvc:message-converters>
+            <bean class="org.springframework.http.converter.StringHttpMessageConverter" id="stringHttpMessageConverter">
+                <constructor-arg index="0" value="UTF-8"/>
+            </bean>
+            <bean class="com.shrimp.common.spring.extend.converter.json.CallbackMappingJackson2HttpMessageConverter" id="callbackMappingJackson2HttpMessageConverter">
+                <property name="callbackName" value="callback"/>
+            </bean>
+        </mvc:message-converters>
+    </mvc:annotation-driven>
     <context:component-scan base-package="com.shrimp.controller"/>
 
     <!--配置视图解析器-->
