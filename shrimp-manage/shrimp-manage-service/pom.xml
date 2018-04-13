@@ -35,6 +35,13 @@
             <groupId>com.github.pagehelper</groupId>
             <artifactId>pagehelper</artifactId>
         </dependency>
+
+
+        <!--jedis-->
+        <dependency>
+            <groupId>redis.clients</groupId>
+            <artifactId>jedis</artifactId>
+        </dependency>
     </dependencies>
 
 </project>

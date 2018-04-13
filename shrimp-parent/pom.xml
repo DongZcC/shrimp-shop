@@ -92,10 +92,10 @@
 
             <!--集成通用mapper-->
             <dependency>
-            <groupId>com.github.abel533</groupId>
-            <artifactId>mapper</artifactId>
-            <version>2.3.4</version>
-        </dependency>
+                <groupId>com.github.abel533</groupId>
+                <artifactId>mapper</artifactId>
+                <version>2.3.4</version>
+            </dependency>
 
             <!-- MySql -->
             <dependency>
@@ -175,6 +175,13 @@
                 <artifactId>lombok</artifactId>
                 <version>1.16.10</version>
             </dependency>
+
+            <!--redis-->
+            <dependency>
+                <groupId>redis.clients</groupId>
+                <artifactId>jedis</artifactId>
+                <version>2.7.2</version>
+            </dependency>
         </dependencies>
     </dependencyManagement>
 
@@ -201,6 +208,16 @@
                     <encoding>UTF-8</encoding>
                 </configuration>
             </plugin>
+
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <configuration>
+                    <source>1.8</source>
+                    <target>1.8</target>
+                </configuration>
+            </plugin>
+
         </plugins>
         <pluginManagement>
             <plugins>

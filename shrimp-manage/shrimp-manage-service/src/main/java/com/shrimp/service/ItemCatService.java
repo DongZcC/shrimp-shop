@@ -1,10 +1,13 @@
 package com.shrimp.service;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.shrimp.common.bean.EasyUIResult;
 import com.shrimp.common.bean.ItemCatData;
 import com.shrimp.common.bean.ItemCatResult;
 import com.shrimp.mapper.ItemCatMapper;
 import com.shrimp.pojo.ItemCat;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -22,7 +25,26 @@ import java.util.Map;
 @Service
 public class ItemCatService extends BaseService<ItemCat> {
 
+    @Autowired
+    private RedisService redisService;
+
+    private static final ObjectMapper MAPPER = new ObjectMapper();
+
+    private static final String REDIS_ITEMCAT_KEY = "TAOTAO_MANAGE_ITEM_CAT_ALL"; // 定义key规则
+
+    private static final int REDIS_EXPIRE_TIME = 60 * 24;
+
     public ItemCatResult queryAllToTree() {
+        try {
+            String cache = redisService.get(REDIS_ITEMCAT_KEY);
+            // 命中
+            if (StringUtils.isNotEmpty(cache)) {
+                return MAPPER.readValue(cache, ItemCatResult.class);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
         ItemCatResult itemCatResult = new ItemCatResult();
         List<ItemCat> itemCats = queryAll();
 
@@ -65,9 +87,16 @@ public class ItemCatService extends BaseService<ItemCat> {
                 }
             }
 
-            if(itemCatResult.getItemCats().size() >= 14){
+            if (itemCatResult.getItemCats().size() >= 14) {
                 break;
             }
+        }
+
+        // 将结果写入到缓存中
+        try {
+            redisService.set(REDIS_ITEMCAT_KEY, MAPPER.writeValueAsString(itemCatResult), REDIS_EXPIRE_TIME);
+        } catch (Exception e) {
+            e.printStackTrace();
         }
         return itemCatResult;
     }
