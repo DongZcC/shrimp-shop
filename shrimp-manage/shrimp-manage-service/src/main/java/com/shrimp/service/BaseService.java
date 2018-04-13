@@ -1,11 +1,11 @@
 package com.shrimp.service;
 
+import com.github.abel533.entity.Example;
 import com.github.abel533.mapper.Mapper;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.shrimp.pojo.BasePojo;
 import org.springframework.beans.factory.annotation.Autowired;
-import tk.mybatis.mapper.entity.Example;
 
 import java.util.Date;
 import java.util.List;
