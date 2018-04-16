@@ -1,6 +1,7 @@
-package com.shrimp.sso.controller;
+package com.shrimp.controller.api;
 
-import com.shrimp.sso.service.UserService;
+import com.shrimp.pojo.Item;
+import com.shrimp.service.ItemService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -8,34 +9,27 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import sun.misc.Request;
 
 /**
  * 功能说明: <br>
  * 系统版本: v1.0<br>
  * 开发人员: @author dongzc15247<br>
- * 开发时间: 2018-04-13<br>
+ * 开发时间: 2018-04-16<br>
  */
 @Controller
-@RequestMapping("user")
-public class UserController {
+@RequestMapping("api/item")
+public class ApiItemController {
 
     @Autowired
-    private UserService userService;
+    private ItemService itemService;
 
-    @RequestMapping(value = "register", method = RequestMethod.GET)
-    public String register() {
-        return "register";
-    }
-
-
-    @RequestMapping(value = "check/{param}/{type}", method = RequestMethod.GET)
-    public ResponseEntity<Boolean> check(@PathVariable("param") String param, @PathVariable("type") Integer type) {
+    @RequestMapping(value = "{itemId}", method = RequestMethod.GET)
+    public ResponseEntity<Item> queryById(@PathVariable("itemId") Long itemId) {
         try {
-            Boolean f = userService.check(param, type);
-            if (null == f)
+            Item item = itemService.queryById(itemId);
+            if (item == null)
                 return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
-            return ResponseEntity.ok(f);
+            return ResponseEntity.ok(item);
         } catch (Exception e) {
             e.printStackTrace();
         }

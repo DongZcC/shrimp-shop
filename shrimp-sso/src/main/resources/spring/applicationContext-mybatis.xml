@@ -16,13 +16,13 @@
         <!--指定mapper.xml 文件-->
         <!--<property name="mapperLocations" value="classpath*:/mybatis/mappers/**/*.xml"/>-->
         <!--指定别名包-->
-        <property name="typeAliasesPackage" value="com.shrimp.pojo"/>
+        <property name="typeAliasesPackage" value="com.shrimp.sso.pojo"/>
     </bean>
 
 
     <!--定义mapper接口的扫描器-->
     <bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
-        <property name="basePackage" value="com.shrimp.mapper"/>
+        <property name="basePackage" value="com.shrimp.sso.mapper"/>
     </bean>
 
 </beans>
